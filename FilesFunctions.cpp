@@ -37,6 +37,10 @@ void FilesFunctions::writeDataToFile(const pqxx::result &R, const std::string &f
 
 
             outFile << line << std::endl;
+            outFile << line << std::endl;
+            outFile << line << std::endl;
+            outFile << line << std::endl;
+            outFile << line << std::endl;
         }
         outFile.close();
     } else {
