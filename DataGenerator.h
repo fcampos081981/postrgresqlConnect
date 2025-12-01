@@ -10,10 +10,14 @@
 
 class DataGenerator {
 public:
-     DataGenerator(){}
-     virtual ~DataGenerator() = default;
-     std::string generateRandomName();
-     std::string generateRandomPhone();
+    DataGenerator() {
+    }
+
+    virtual ~DataGenerator() = default;
+
+    std::string generateRandomName();
+
+    std::string generateRandomPhone();
 };
 
 

@@ -59,7 +59,7 @@ void DatabaseFunctions::insertData(pqxx::connection &C, int count) {
 
 void DatabaseFunctions::insertRandomPerson(pqxx::work &W, int age) {
     DataGenerator dg;
-    std::string nome =  dg.generateRandomName();
+    std::string nome = dg.generateRandomName();
     std::string telefone = dg.generateRandomPhone();
 
 

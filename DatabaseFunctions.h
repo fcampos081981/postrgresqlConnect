@@ -8,14 +8,20 @@
 #include "DataGenerator.h"
 
 class DatabaseFunctions {
-    public:
-    DatabaseFunctions(){}
-    virtual  ~DatabaseFunctions() = default;
+public:
+    DatabaseFunctions() {
+    }
+
+    virtual ~DatabaseFunctions() = default;
 
     static std::unique_ptr<pqxx::connection> connectToDB(const std::string &connStr);
-    void createTables(pqxx::connection &C) ;
+
+    void createTables(pqxx::connection &C);
+
     void insertData(pqxx::connection &C, int count);
+
     void insertRandomPerson(pqxx::work &W, int age);
+
     void readData(pqxx::connection &C, const std::string &filename);
 };
 

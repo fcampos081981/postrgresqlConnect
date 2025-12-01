@@ -19,6 +19,8 @@ int main() {
     auto conn = DatabaseFunctions::connectToDB(serverUrl);
 
     if (conn) {
+        std::string usrDir = FilesFunctions::getUserHomeDir();
+
         DatabaseFunctions dbf;
 
         dbf.createTables(*conn);
@@ -29,7 +31,8 @@ int main() {
 
         clearScreen();
 
-        std::string fileName = "/home/usuario/mydb_dump.txt";
+
+        std::string fileName = usrDir + "/mydb_dump.txt";
 
         FilesFunctions::deleteFileIfExists(fileName);
 

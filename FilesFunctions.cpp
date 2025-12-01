@@ -42,3 +42,16 @@ void FilesFunctions::writeDataToFile(const pqxx::result &R, const std::string &f
         std::cerr << "Error: Could not open file '" << filename << "' for writing." << std::endl;
     }
 }
+
+std::string FilesFunctions::getUserHomeDir() {
+    uid_t uid = getuid();
+
+    struct passwd *pw = getpwuid(uid);
+
+    if (pw == nullptr) {
+        std::cerr << "Error: Could not retrieve user information." << std::endl;
+        return "";
+    }
+
+    return std::string(pw->pw_dir);
+}
