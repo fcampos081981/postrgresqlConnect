@@ -6,7 +6,8 @@
 #include <sys/types.h>
 #include <pwd.h>
 #include <chrono>
-
+#include <cstdio>
+#include <cmath>
 
 namespace pqxx {
     class result;
@@ -32,6 +33,12 @@ public:
     static std::string formatTime(std::chrono::time_point<std::chrono::system_clock> tp);
 
     static void showElapsed(std::chrono::time_point<std::chrono::system_clock> start,std::chrono::time_point<std::chrono::system_clock> end) ;
+
+    static std::string sformatFileSize(uintmax_t bytes);
+
+    static uintmax_t getFileSize(const std::string &filename);
+
+
 
 };
 

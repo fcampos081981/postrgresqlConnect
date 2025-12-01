@@ -69,12 +69,10 @@ void FilesFunctions::showProgressBar(float progress,int count) {
     }
     std::cout << "] " << int(progress * 100.0) << " % - "<<count << std::endl;
     std::cout.flush();
-
 }
 
 void FilesFunctions::clearScreen() {
     std::cout << "\033[2J\033[3J\033[H" << std::flush;
-
 }
 
 std::string FilesFunctions::formatTime(std::chrono::time_point<std::chrono::system_clock> tp) {
@@ -103,4 +101,35 @@ void FilesFunctions::showElapsed(std::chrono::time_point<std::chrono::system_clo
               << std::setfill('0') << std::setw(2) << hours << ":"
               << std::setfill('0') << std::setw(2) << minutes << ":"
               << std::setfill('0') << std::setw(2) << seconds << std::endl;
+}
+
+std::string FilesFunctions::sformatFileSize(uintmax_t bytes) {
+    const char* suffixes[] = {"B", "KB", "MB", "GB", "TB", "PB"};
+    int suffixIndex = 0;
+    double size = static_cast<double>(bytes);
+
+    while (size >= 1024 && suffixIndex < 5) {
+        size /= 1024;
+        suffixIndex++;
+    }
+
+    char buffer[64];
+
+    std::snprintf(buffer, sizeof(buffer), "%.2f %s", size, suffixes[suffixIndex]);
+
+    return std::basic_string<char>(buffer);
+}
+
+uintmax_t FilesFunctions::getFileSize(const std::string &filePath) {
+    try {
+
+        uintmax_t fileSize = fs::file_size(filePath);
+
+        std::cout << "Raw Size: " << fileSize << " bytes" << std::endl;
+        std::string ffs = FilesFunctions::sformatFileSize(fileSize) ;
+        std::cout << "Formatted: " << ffs << std::endl;
+
+    } catch (const fs::filesystem_error& e) {
+        std::cerr << "Error accessing file: " << e.what() << std::endl;
+    }
 }
