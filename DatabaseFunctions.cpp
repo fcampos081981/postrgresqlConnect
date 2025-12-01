@@ -3,6 +3,7 @@
 #include "FilesFunctions.h"
 #include <iostream>
 
+
 std::unique_ptr<pqxx::connection> DatabaseFunctions::connectToDB(const std::string &connStr) {
     try {
         auto C = std::make_unique<pqxx::connection>(connStr);
@@ -52,7 +53,7 @@ void DatabaseFunctions::insertData(pqxx::connection &C, int count) {
             float progress_bar = (float)i / count;
 
             FilesFunctions::clearScreen();
-            FilesFunctions::showProgressBar(progress_bar);
+            FilesFunctions::showProgressBar(progress_bar,(count - i));
 
         }
 

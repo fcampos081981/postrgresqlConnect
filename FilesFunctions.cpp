@@ -57,7 +57,7 @@ std::string FilesFunctions::getUserHomeDir() {
     return std::string(pw->pw_dir);
 }
 
-void FilesFunctions::showProgressBar(float progress) {
+void FilesFunctions::showProgressBar(float progress,int count) {
 
     int barWidth = 70;
     std::cout << "[";
@@ -67,13 +67,14 @@ void FilesFunctions::showProgressBar(float progress) {
         else if (i == pos) std::cout << ">";
         else std::cout << " ";
     }
-    std::cout << "] " << int(progress * 100.0) << " %" << std::endl;
+    std::cout << "] " << int(progress * 100.0) << " % - "<<count << std::endl;
     std::cout.flush();
 
 }
 
 void FilesFunctions::clearScreen() {
     std::cout << "\033[2J\033[3J\033[H" << std::flush;
+
 }
 
 std::string FilesFunctions::formatTime(std::chrono::time_point<std::chrono::system_clock> tp) {

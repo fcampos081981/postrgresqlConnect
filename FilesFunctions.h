@@ -6,7 +6,7 @@
 #include <sys/types.h>
 #include <pwd.h>
 #include <chrono>
-#include <cstdlib>
+
 
 namespace pqxx {
     class result;
@@ -25,7 +25,7 @@ public:
 
     static std::string getUserHomeDir();
 
-    static void showProgressBar(float progress);
+    static void showProgressBar(float progress,int count);
 
     static void clearScreen();
 
