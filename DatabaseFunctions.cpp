@@ -45,7 +45,7 @@ void DatabaseFunctions::insertData(pqxx::connection &C, int count) {
         std::cout << "Inserting " << count << " records..." << std::endl;
 
         for (int i = 0; i < count; i++) {
-            std::cout << "\r" << i + 1 << " / " << count << std::endl;
+
 
             insertRandomPerson(W, 18 + (i % 60));
         }
