@@ -37,10 +37,6 @@ void FilesFunctions::writeDataToFile(const pqxx::result &R, const std::string &f
 
 
             outFile << line << std::endl;
-            outFile << line << std::endl;
-            outFile << line << std::endl;
-            outFile << line << std::endl;
-            outFile << line << std::endl;
         }
         outFile.close();
     } else {
@@ -90,7 +86,7 @@ std::string FilesFunctions::formatTime(std::chrono::time_point<std::chrono::syst
 void FilesFunctions::showElapsed(std::chrono::time_point<std::chrono::system_clock> start,
                                  std::chrono::time_point<std::chrono::system_clock> end) {
     std::string startTime = "Start: " + FilesFunctions::formatTime(start);
-    std::string endTime = "Start: " + FilesFunctions::formatTime(end);
+    std::string endTime = "End: " + FilesFunctions::formatTime(end);
     auto elapsed_seconds = std::chrono::duration_cast<std::chrono::seconds>(end - start).count();
 
     int hours = elapsed_seconds / 3600;
