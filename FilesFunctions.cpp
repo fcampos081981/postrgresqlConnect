@@ -26,7 +26,7 @@ void FilesFunctions::writeDataToFile(const pqxx::result &R, const std::string &f
         for (auto row: R) {
             int id = row[0].as<int>();
             std::stringstream ss;
-            ss << std::setw(7) << std::setfill('0') << id;
+            ss << std::setw(9) << std::setfill('0') << id;
 
             std::string line =
                     "ID: " + ss.str() + " | " +
@@ -54,4 +54,32 @@ std::string FilesFunctions::getUserHomeDir() {
     }
 
     return std::string(pw->pw_dir);
+}
+
+void FilesFunctions::showProgressBar(float progress) {
+    clearScreen();
+    int barWidth = 70;
+
+    std::cout << "[";
+    int pos = barWidth * progress;
+    for (int i = 0; i < barWidth; ++i) {
+        if (i < pos) std::cout << "=";
+        else if (i == pos) std::cout << ">";
+        else std::cout << " ";
+    }
+    std::cout << "] " << int(progress * 100.0) << " %" << std::endl;
+    std::cout.flush();
+}
+
+void FilesFunctions::clearScreen() {
+    std::cout << "\033[2J\033[1;1H" << std::flush;
+}
+
+std::string FilesFunctions::formatTime(std::chrono::time_point<std::chrono::system_clock> tp) {
+    std::time_t t = std::chrono::system_clock::to_time_t(tp);
+    std::tm* now_tm = std::localtime(&t);
+    std::stringstream ss;
+    ss << std::put_time(now_tm, "%H:%M:%S");
+
+    return ss.str();
 }

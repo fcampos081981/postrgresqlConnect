@@ -44,10 +44,15 @@ void DatabaseFunctions::insertData(pqxx::connection &C, int count) {
 
         std::cout << "Inserting " << count << " records..." << std::endl;
 
+
         for (int i = 0; i < count; i++) {
 
-
             insertRandomPerson(W, 18 + (i % 60));
+
+            float progress_bar = (float)i / count;
+
+            FilesFunctions::showProgressBar(progress_bar);
+
         }
 
         W.commit();
@@ -83,27 +88,25 @@ void DatabaseFunctions::readData(pqxx::connection &C, const std::string &filenam
     try {
         pqxx::nontransaction N(C);
 
-        std::cout << "\n--- Fetching Data ---" << std::endl;
-
         pqxx::result R = N.exec(
             "SELECT f.id, f.nome, f.idade, t.numero "
             "FROM pessoas f "
             "LEFT JOIN telefones t ON f.id = t.pessoas_id "
             "ORDER BY f.id ASC  ");
 
+        FilesFunctions::writeDataToFile(R, filename);
+
         for (auto row: R) {
             int id = row[0].as<int>();
             std::stringstream ss;
-            ss << std::setw(7) << std::setfill('0') << id;
+            ss << std::setw(9) << std::setfill('0') << id;
             std::cout << "ID: " << ss.str() << " | "
                     << "Nome: " << row[1].c_str() << " | "
                     << "Idade: " << row[2].as<int>() << " | "
                     << "Telefone: " << (row[3].is_null() ? "N/A" : row[3].c_str())
                     << std::endl;
-
-
         }
-        FilesFunctions::writeDataToFile(R, filename);
+
     } catch (const std::exception &e) {
         std::cerr << "Read Error: " << e.what() << std::endl;
     }

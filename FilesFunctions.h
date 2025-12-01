@@ -5,6 +5,8 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <pwd.h>
+#include <chrono>
+#include <cstdlib>
 
 namespace pqxx {
     class result;
@@ -22,6 +24,13 @@ public:
     static void writeDataToFile(const pqxx::result &R, const std::string &filename);
 
     static std::string getUserHomeDir();
+
+    static void showProgressBar(float progress);
+
+    static void clearScreen();
+
+    static std::string formatTime(std::chrono::time_point<std::chrono::system_clock> tp);
+
 };
 
 

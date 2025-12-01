@@ -9,14 +9,12 @@
 #include "EnvLoader.h"
 
 
-void clearScreen() {
-    std::cout << "\033[2J\033[1;1H";
-}
+
 
 std::string getEnv() {
     try {
-
-        EnvLoader::load(FilesFunctions::getUserHomeDir() +"/.env");
+        std::string path = FilesFunctions::getUserHomeDir() + "/.env";
+        EnvLoader::load(path);
 
 
         std::string host = EnvLoader::get("DB_HOST");
@@ -25,6 +23,7 @@ std::string getEnv() {
         std::string dbName = EnvLoader::get("DB_NAME");
         std::string dbPass = EnvLoader::get("DB_PASSWORD");
 
+        std::cout << "From .env: " << path << std::endl;
         std::cout << "Starting server on: " << host << ":" << port << std::endl;
         std::cout << "DbName: " << dbName << std::endl;
         std::cout << "Connecting as user: " << dbUser << std::endl;
@@ -41,6 +40,24 @@ std::string getEnv() {
     }
 }
 
+void showElapsed(std::chrono::time_point<std::chrono::system_clock> start,std::chrono::time_point<std::chrono::system_clock> end) {
+
+    std::string startTime= "Start: "+FilesFunctions::formatTime(start);
+    std::string endTime= "Start: "+FilesFunctions::formatTime(end);
+    auto elapsed_seconds = std::chrono::duration_cast<std::chrono::seconds>(end - start).count();
+
+    int hours = elapsed_seconds / 3600;
+    int minutes = (elapsed_seconds % 3600) / 60;
+    int seconds = elapsed_seconds % 60;
+
+    std::cout << std::endl;
+    std::cout << startTime<< std::endl;
+    std::cout << endTime<< std::endl;
+    std::cout << "Elapsed Time: "
+              << std::setfill('0') << std::setw(2) << hours << ":"
+              << std::setfill('0') << std::setw(2) << minutes << ":"
+              << std::setfill('0') << std::setw(2) << seconds << std::endl;
+}
 int main() {
     auto start = std::chrono::high_resolution_clock::now();
     std::string serverUrl = getEnv();
@@ -48,17 +65,17 @@ int main() {
 
     auto conn = DatabaseFunctions::connectToDB(serverUrl);
 
+    DatabaseFunctions dbf;
+
     if (conn) {
 
-        DatabaseFunctions dbf;
+        FilesFunctions::clearScreen();
 
         dbf.createTables(*conn);
 
-        clearScreen();
+        dbf.insertData(*conn, 99999);
 
-        dbf.insertData(*conn, 1000000);
-
-        clearScreen();
+        FilesFunctions::clearScreen();
 
         FilesFunctions::deleteFileIfExists(fileName);
 
@@ -67,17 +84,9 @@ int main() {
         std::cerr << "Could not proceed with database operations due to connection failure." << std::endl;
         return 1;
     }
-    auto end = std::chrono::high_resolution_clock::now();
-    auto elapsed_seconds = std::chrono::duration_cast<std::chrono::seconds>(end - start).count();
+    std::chrono::time_point<std::chrono::system_clock> end = std::chrono::high_resolution_clock::now();
 
-    int hours = elapsed_seconds / 3600;
-    int minutes = (elapsed_seconds % 3600) / 60;
-    int seconds = elapsed_seconds % 60;
-
-    std::cout << "Elapsed Time: "
-              << std::setfill('0') << std::setw(2) << hours << ":"
-              << std::setfill('0') << std::setw(2) << minutes << ":"
-              << std::setfill('0') << std::setw(2) << seconds << std::endl;
+    showElapsed(start,end);
 
     return 0;
 }

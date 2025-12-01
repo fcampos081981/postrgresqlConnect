@@ -6,6 +6,7 @@
 #include <memory>
 #include <pqxx/pqxx>
 #include "DataGenerator.h"
+#include "FilesFunctions.h"
 
 class DatabaseFunctions {
 public:
@@ -22,7 +23,10 @@ public:
 
     void insertRandomPerson(pqxx::work &W, int age);
 
-    void readData(pqxx::connection &C, const std::string &filename);
+    auto readData(pqxx::connection &C, const std::string &filename) -> void;
+
+private:
+    FilesFunctions ff;
 };
 
 
