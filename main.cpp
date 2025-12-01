@@ -15,11 +15,11 @@ void clearScreen() {
 
 int main() {
     std::string serverUrl = "dbname=mydb user=postgres password=12345 host=localhost port=5432";
+    std::string fileName = FilesFunctions::getUserHomeDir() + "/mydb_dump.txt";
 
     auto conn = DatabaseFunctions::connectToDB(serverUrl);
 
     if (conn) {
-        std::string usrDir = FilesFunctions::getUserHomeDir();
 
         DatabaseFunctions dbf;
 
@@ -27,12 +27,9 @@ int main() {
 
         clearScreen();
 
-        dbf.insertData(*conn, 100000);
+        dbf.insertData(*conn, 10000);
 
         clearScreen();
-
-
-        std::string fileName = usrDir + "/mydb_dump.txt";
 
         FilesFunctions::deleteFileIfExists(fileName);
 
