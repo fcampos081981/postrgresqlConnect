@@ -4,7 +4,7 @@
 #include <iostream>
 #include <algorithm>
 
-// Define the static member
+
 std::unordered_map<std::string, std::string> EnvLoader::envMap;
 
 void EnvLoader::load(const std::string& path) {
@@ -16,25 +16,24 @@ void EnvLoader::load(const std::string& path) {
 
     std::string line;
     while (std::getline(file, line)) {
-        // 1. Remove comments (anything after #)
+
         size_t commentPos = line.find('#');
         if (commentPos != std::string::npos) {
             line = line.substr(0, commentPos);
         }
 
-        // 2. Trim whitespace
+
         line = trim(line);
 
-        // 3. Skip empty lines
+
         if (line.empty()) continue;
 
-        // 4. Parse KEY=VALUE
+
         size_t delimiterPos = line.find('=');
         if (delimiterPos != std::string::npos) {
             std::string key = trim(line.substr(0, delimiterPos));
             std::string value = trim(line.substr(delimiterPos + 1));
 
-            // Handle quoted values (remove surrounding quotes if present)
             if (value.size() >= 2 && value.front() == '"' && value.back() == '"') {
                 value = value.substr(1, value.size() - 2);
             } else if (value.size() >= 2 && value.front() == '\'' && value.back() == '\'') {
@@ -66,7 +65,6 @@ bool EnvLoader::has(const std::string& key) {
     return envMap.find(key) != envMap.end();
 }
 
-// Helper to trim leading/trailing whitespace
 std::string EnvLoader::trim(const std::string& str) {
     const std::string whitespace = " \t\n\r";
     size_t start = str.find_first_not_of(whitespace);
