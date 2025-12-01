@@ -57,7 +57,7 @@ std::string FilesFunctions::getUserHomeDir() {
     return std::string(pw->pw_dir);
 }
 
-void FilesFunctions::showProgressBar(float progress, int count) {
+void FilesFunctions::showProgressBar(float progress, int count, int countTotal) {
     int barWidth = 70;
     std::cout << "[";
     int pos = barWidth * progress;
@@ -66,7 +66,7 @@ void FilesFunctions::showProgressBar(float progress, int count) {
         else if (i == pos) std::cout << ">";
         else std::cout << " ";
     }
-    std::cout << "] " << int(progress * 100.0) << " % - " << count << std::endl;
+    std::cout << "] " << int(progress * 100.0) << " % - Done: " << count << " of " << countTotal << std::endl;
     std::cout.flush();
 }
 

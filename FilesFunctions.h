@@ -26,7 +26,7 @@ public:
 
     static std::string getUserHomeDir();
 
-    static void showProgressBar(float progress, int count);
+    static void showProgressBar(float progress, int count, int countTotal);
 
     static void clearScreen();
 
