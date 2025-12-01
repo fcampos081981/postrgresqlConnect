@@ -1,11 +1,10 @@
-
 services:
   postgres_db:
     image: postgres:16-alpine
     restart: always
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 12345
+      POSTGRES_PASSWORD: "12345"
       POSTGRES_DB: mydb
     ports:
       - "5432:5432"
@@ -14,4 +13,6 @@ services:
     networks:
       - app_network
 
-
+networks:
+  app_network:
+    driver: bridge
