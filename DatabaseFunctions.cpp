@@ -101,8 +101,9 @@ void DatabaseFunctions::readData(pqxx::connection &C, const std::string &filenam
                     << "Telefone: " << (row[3].is_null() ? "N/A" : row[3].c_str())
                     << std::endl;
 
-            FilesFunctions::writeDataToFile(R, filename);
+
         }
+        FilesFunctions::writeDataToFile(R, filename);
     } catch (const std::exception &e) {
         std::cerr << "Read Error: " << e.what() << std::endl;
     }

@@ -55,7 +55,7 @@ int main() {
 
         clearScreen();
 
-        dbf.insertData(*conn, 10000);
+        dbf.insertData(*conn, 1000000);
 
         clearScreen();
 
