@@ -104,32 +104,36 @@ void FilesFunctions::showElapsed(std::chrono::time_point<std::chrono::system_clo
 }
 
 std::string FilesFunctions::sformatFileSize(uintmax_t bytes) {
-    const char* suffixes[] = {"B", "KB", "MB", "GB", "TB", "PB"};
-    int suffixIndex = 0;
-    double size = static_cast<double>(bytes);
+    static constexpr const char* suffixes[] = {"B", "KB", "MB", "GB", "TB", "PB"};
+    static constexpr double unitScale = 1024.0;
 
-    while (size >= 1024 && suffixIndex < 5) {
-        size /= 1024;
+    double size = static_cast<double>(bytes);
+    size_t suffixIndex = 0;
+    const size_t maxSuffixIndex = std::size(suffixes) - 1;
+
+    while (size >= unitScale && suffixIndex < maxSuffixIndex) {
+        size /= unitScale;
         suffixIndex++;
     }
 
-    char buffer[64];
-
-    std::snprintf(buffer, sizeof(buffer), "%.2f %s", size, suffixes[suffixIndex]);
-
-    return std::basic_string<char>(buffer);
+    std::ostringstream oss;
+    oss << std::fixed << std::setprecision(2) << size << " " << suffixes[suffixIndex];
+    return oss.str();
 }
 
 uintmax_t FilesFunctions::getFileSize(const std::string &filePath) {
     try {
-
-        uintmax_t fileSize = fs::file_size(filePath);
-
-        std::cout << "Raw Size: " << fileSize << " bytes" << std::endl;
-        std::string ffs = FilesFunctions::sformatFileSize(fileSize) ;
-        std::cout << "Formatted: " << ffs << std::endl;
+        if (std::filesystem::exists(filePath)) {
+            auto fsize = std::filesystem::file_size(filePath);
+            std::cout << sformatFileSize(fsize);
+            return fsize;
+        } else {
+            std::cout << "File not found: " << filePath << std::endl;
+            return 0;
+        }
 
     } catch (const fs::filesystem_error& e) {
         std::cerr << "Error accessing file: " << e.what() << std::endl;
+        return 0;
     }
 }
