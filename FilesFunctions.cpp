@@ -125,7 +125,7 @@ uintmax_t FilesFunctions::getFileSize(const std::string &filePath) {
     try {
         if (std::filesystem::exists(filePath)) {
             auto fsize = std::filesystem::file_size(filePath);
-            std::cout << sformatFileSize(fsize);
+            std::cout << "File size: " <<sformatFileSize(fsize);
             return fsize;
         } else {
             std::cout << "File not found: " << filePath << std::endl;

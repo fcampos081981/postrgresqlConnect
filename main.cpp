@@ -41,7 +41,7 @@ int main() {
     std::string serverUrl = getEnv();
     std::string fileName = FilesFunctions::getUserHomeDir() + "/mydb_dump.txt";
 
-    /*auto conn = DatabaseFunctions::connectToDB(serverUrl);
+    auto conn = DatabaseFunctions::connectToDB(serverUrl);
 
     DatabaseFunctions dbf;
 
@@ -51,7 +51,7 @@ int main() {
 
         dbf.createTables(*conn);
 
-        dbf.insertData(*conn, 9999999);
+        dbf.insertData(*conn, 999);
 
         FilesFunctions::clearScreen();
 
@@ -64,7 +64,7 @@ int main() {
     }
     std::chrono::time_point<std::chrono::system_clock> end = std::chrono::high_resolution_clock::now();
 
-    FilesFunctions::showElapsed(start,end);*/
+    FilesFunctions::showElapsed(start,end);
 
     FilesFunctions::getFileSize(fileName);
     return 0;
