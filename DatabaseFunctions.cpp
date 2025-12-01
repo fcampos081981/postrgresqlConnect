@@ -51,6 +51,7 @@ void DatabaseFunctions::insertData(pqxx::connection &C, int count) {
 
             float progress_bar = (float)i / count;
 
+            FilesFunctions::clearScreen();
             FilesFunctions::showProgressBar(progress_bar);
 
         }

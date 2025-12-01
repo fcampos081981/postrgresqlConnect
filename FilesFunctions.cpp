@@ -4,6 +4,7 @@
 #include <filesystem>
 #include <pqxx/pqxx>
 #include <iomanip>
+#include <thread>
 
 namespace fs = std::filesystem;
 
@@ -57,9 +58,8 @@ std::string FilesFunctions::getUserHomeDir() {
 }
 
 void FilesFunctions::showProgressBar(float progress) {
-    clearScreen();
-    int barWidth = 70;
 
+    int barWidth = 70;
     std::cout << "[";
     int pos = barWidth * progress;
     for (int i = 0; i < barWidth; ++i) {
@@ -69,10 +69,11 @@ void FilesFunctions::showProgressBar(float progress) {
     }
     std::cout << "] " << int(progress * 100.0) << " %" << std::endl;
     std::cout.flush();
+
 }
 
 void FilesFunctions::clearScreen() {
-    std::cout << "\033[2J\033[1;1H" << std::flush;
+    std::cout << "\033[2J\033[3J\033[H" << std::flush;
 }
 
 std::string FilesFunctions::formatTime(std::chrono::time_point<std::chrono::system_clock> tp) {

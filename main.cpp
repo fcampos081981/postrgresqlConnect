@@ -36,7 +36,6 @@ std::string getEnv() {
 }
 
 
-
 int main() {
     auto start = std::chrono::high_resolution_clock::now();
     std::string serverUrl = getEnv();
@@ -52,7 +51,7 @@ int main() {
 
         dbf.createTables(*conn);
 
-        dbf.insertData(*conn, 99999);
+        dbf.insertData(*conn, 999999);
 
         FilesFunctions::clearScreen();
 
