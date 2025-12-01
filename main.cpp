@@ -67,5 +67,7 @@ int main() {
     FilesFunctions::showElapsed(start,end);
 
     FilesFunctions::getFileSize(fileName);
+
+    std::cout <<  std::endl;
     return 0;
 }
