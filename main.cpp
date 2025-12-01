@@ -1,8 +1,5 @@
 #include <iostream>
 #include <string>
-#include <pqxx/pqxx>
-#include <vector>
-#include <random>
 #include <memory>
 #include <fstream>
 #include <filesystem>
