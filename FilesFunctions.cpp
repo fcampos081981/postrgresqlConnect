@@ -83,3 +83,22 @@ std::string FilesFunctions::formatTime(std::chrono::time_point<std::chrono::syst
 
     return ss.str();
 }
+
+void FilesFunctions::showElapsed(std::chrono::time_point<std::chrono::system_clock> start,
+    std::chrono::time_point<std::chrono::system_clock> end) {
+    std::string startTime= "Start: "+FilesFunctions::formatTime(start);
+    std::string endTime= "Start: "+FilesFunctions::formatTime(end);
+    auto elapsed_seconds = std::chrono::duration_cast<std::chrono::seconds>(end - start).count();
+
+    int hours = elapsed_seconds / 3600;
+    int minutes = (elapsed_seconds % 3600) / 60;
+    int seconds = elapsed_seconds % 60;
+
+    std::cout << std::endl;
+    std::cout << startTime<< std::endl;
+    std::cout << endTime<< std::endl;
+    std::cout << "Elapsed Time: "
+              << std::setfill('0') << std::setw(2) << hours << ":"
+              << std::setfill('0') << std::setw(2) << minutes << ":"
+              << std::setfill('0') << std::setw(2) << seconds << std::endl;
+}

@@ -31,6 +31,8 @@ public:
 
     static std::string formatTime(std::chrono::time_point<std::chrono::system_clock> tp);
 
+    static void showElapsed(std::chrono::time_point<std::chrono::system_clock> start,std::chrono::time_point<std::chrono::system_clock> end) ;
+
 };
 
 
