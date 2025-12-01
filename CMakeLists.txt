@@ -15,6 +15,8 @@ add_executable(postrgresqlConnect main.cpp
         DatabaseFunctions.cpp
         DatabaseFunctions.h
         DataGenerator.cpp
-        DataGenerator.h)
+        DataGenerator.h
+        EnvLoader.cpp
+        EnvLoader.h)
 target_include_directories(postrgresqlConnect PRIVATE ${PQXX_INCLUDE_DIRS})
 target_link_libraries(postrgresqlConnect PRIVATE ${PQXX_LIBRARIES})
