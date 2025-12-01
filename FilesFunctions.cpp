@@ -26,7 +26,7 @@ void FilesFunctions::writeDataToFile(const pqxx::result &R, const std::string &f
         for (auto row: R) {
             int id = row[0].as<int>();
             std::stringstream ss;
-            ss << std::setw(5) << std::setfill('0') << id;
+            ss << std::setw(7) << std::setfill('0') << id;
 
             std::string line =
                     "ID: " + ss.str() + " | " +
