@@ -23,13 +23,13 @@ std::string getEnv() {
         std::cout << "Starting server on: " << host << ":" << port << std::endl;
         std::cout << "DbName: " << dbName << std::endl;
         std::cout << "Connecting as user: " << dbUser << std::endl;
-        std::cout << "Connecting as password: "  << dbPass<< std::endl;
+        std::cout << "Connecting as password: " << dbPass << std::endl;
 
-        std::string serverUrl = "dbname="+dbName+" user="+dbUser+" password="+dbPass+" host="+host+" port="+port;
+        std::string serverUrl = "dbname=" + dbName + " user=" + dbUser + " password=" + dbPass + " host=" + host +
+                                " port=" + port;
 
         return serverUrl;
-
-    } catch (const std::exception& e) {
+    } catch (const std::exception &e) {
         std::cerr << "Error: " << e.what() << std::endl;
         return " ";
     }
@@ -46,7 +46,6 @@ int main() {
     DatabaseFunctions dbf;
 
     if (conn) {
-
         FilesFunctions::clearScreen();
 
         dbf.createTables(*conn);
@@ -64,10 +63,10 @@ int main() {
     }
     std::chrono::time_point<std::chrono::system_clock> end = std::chrono::high_resolution_clock::now();
 
-    FilesFunctions::showElapsed(start,end);
+    FilesFunctions::showElapsed(start, end);
 
     FilesFunctions::getFileSize(fileName);
 
-    std::cout <<  std::endl;
+    std::cout << std::endl;
     return 0;
 }

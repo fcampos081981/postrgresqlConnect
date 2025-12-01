@@ -7,7 +7,7 @@
 
 std::unordered_map<std::string, std::string> EnvLoader::envMap;
 
-void EnvLoader::load(const std::string& path) {
+void EnvLoader::load(const std::string &path) {
     std::ifstream file(path);
 
     if (!file.is_open()) {
@@ -16,7 +16,6 @@ void EnvLoader::load(const std::string& path) {
 
     std::string line;
     while (std::getline(file, line)) {
-
         size_t commentPos = line.find('#');
         if (commentPos != std::string::npos) {
             line = line.substr(0, commentPos);
@@ -37,7 +36,7 @@ void EnvLoader::load(const std::string& path) {
             if (value.size() >= 2 && value.front() == '"' && value.back() == '"') {
                 value = value.substr(1, value.size() - 2);
             } else if (value.size() >= 2 && value.front() == '\'' && value.back() == '\'') {
-                 value = value.substr(1, value.size() - 2);
+                value = value.substr(1, value.size() - 2);
             }
 
             envMap[key] = value;
@@ -47,25 +46,25 @@ void EnvLoader::load(const std::string& path) {
     file.close();
 }
 
-std::string EnvLoader::get(const std::string& key) {
+std::string EnvLoader::get(const std::string &key) {
     if (envMap.find(key) == envMap.end()) {
         throw std::out_of_range("Environment variable not found: " + key);
     }
     return envMap[key];
 }
 
-std::string EnvLoader::get(const std::string& key, const std::string& defaultValue) {
+std::string EnvLoader::get(const std::string &key, const std::string &defaultValue) {
     if (envMap.find(key) == envMap.end()) {
         return defaultValue;
     }
     return envMap[key];
 }
 
-bool EnvLoader::has(const std::string& key) {
+bool EnvLoader::has(const std::string &key) {
     return envMap.find(key) != envMap.end();
 }
 
-std::string EnvLoader::trim(const std::string& str) {
+std::string EnvLoader::trim(const std::string &str) {
     const std::string whitespace = " \t\n\r";
     size_t start = str.find_first_not_of(whitespace);
 
@@ -76,4 +75,3 @@ std::string EnvLoader::trim(const std::string& str) {
     size_t end = str.find_last_not_of(whitespace);
     return str.substr(start, end - start + 1);
 }
-

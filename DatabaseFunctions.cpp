@@ -47,14 +47,12 @@ void DatabaseFunctions::insertData(pqxx::connection &C, int count) {
 
 
         for (int i = 0; i < count; i++) {
-
             insertRandomPerson(W, 18 + (i % 60));
 
-            float progress_bar = (float)i / count;
+            float progress_bar = (float) i / count;
 
             FilesFunctions::clearScreen();
-            FilesFunctions::showProgressBar(progress_bar,(count - i));
-
+            FilesFunctions::showProgressBar(progress_bar, (count - i));
         }
 
         W.commit();
@@ -108,7 +106,6 @@ void DatabaseFunctions::readData(pqxx::connection &C, const std::string &filenam
                     << "Telefone: " << (row[3].is_null() ? "N/A" : row[3].c_str())
                     << std::endl;
         }
-
     } catch (const std::exception &e) {
         std::cerr << "Read Error: " << e.what() << std::endl;
     }

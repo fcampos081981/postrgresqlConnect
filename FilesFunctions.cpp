@@ -57,8 +57,7 @@ std::string FilesFunctions::getUserHomeDir() {
     return std::string(pw->pw_dir);
 }
 
-void FilesFunctions::showProgressBar(float progress,int count) {
-
+void FilesFunctions::showProgressBar(float progress, int count) {
     int barWidth = 70;
     std::cout << "[";
     int pos = barWidth * progress;
@@ -67,7 +66,7 @@ void FilesFunctions::showProgressBar(float progress,int count) {
         else if (i == pos) std::cout << ">";
         else std::cout << " ";
     }
-    std::cout << "] " << int(progress * 100.0) << " % - "<<count << std::endl;
+    std::cout << "] " << int(progress * 100.0) << " % - " << count << std::endl;
     std::cout.flush();
 }
 
@@ -77,7 +76,7 @@ void FilesFunctions::clearScreen() {
 
 std::string FilesFunctions::formatTime(std::chrono::time_point<std::chrono::system_clock> tp) {
     std::time_t t = std::chrono::system_clock::to_time_t(tp);
-    std::tm* now_tm = std::localtime(&t);
+    std::tm *now_tm = std::localtime(&t);
     std::stringstream ss;
     ss << std::put_time(now_tm, "%H:%M:%S");
 
@@ -85,9 +84,9 @@ std::string FilesFunctions::formatTime(std::chrono::time_point<std::chrono::syst
 }
 
 void FilesFunctions::showElapsed(std::chrono::time_point<std::chrono::system_clock> start,
-    std::chrono::time_point<std::chrono::system_clock> end) {
-    std::string startTime= "Start: "+FilesFunctions::formatTime(start);
-    std::string endTime= "Start: "+FilesFunctions::formatTime(end);
+                                 std::chrono::time_point<std::chrono::system_clock> end) {
+    std::string startTime = "Start: " + FilesFunctions::formatTime(start);
+    std::string endTime = "Start: " + FilesFunctions::formatTime(end);
     auto elapsed_seconds = std::chrono::duration_cast<std::chrono::seconds>(end - start).count();
 
     int hours = elapsed_seconds / 3600;
@@ -95,16 +94,16 @@ void FilesFunctions::showElapsed(std::chrono::time_point<std::chrono::system_clo
     int seconds = elapsed_seconds % 60;
 
     std::cout << std::endl;
-    std::cout << startTime<< std::endl;
-    std::cout << endTime<< std::endl;
+    std::cout << startTime << std::endl;
+    std::cout << endTime << std::endl;
     std::cout << "Elapsed Time: "
-              << std::setfill('0') << std::setw(2) << hours << ":"
-              << std::setfill('0') << std::setw(2) << minutes << ":"
-              << std::setfill('0') << std::setw(2) << seconds << std::endl;
+            << std::setfill('0') << std::setw(2) << hours << ":"
+            << std::setfill('0') << std::setw(2) << minutes << ":"
+            << std::setfill('0') << std::setw(2) << seconds << std::endl;
 }
 
 std::string FilesFunctions::sformatFileSize(uintmax_t bytes) {
-    static constexpr const char* suffixes[] = {"B", "KB", "MB", "GB", "TB", "PB"};
+    static constexpr const char *suffixes[] = {"B", "KB", "MB", "GB", "TB", "PB"};
     static constexpr double unitScale = 1024.0;
 
     double size = static_cast<double>(bytes);
@@ -125,14 +124,13 @@ uintmax_t FilesFunctions::getFileSize(const std::string &filePath) {
     try {
         if (std::filesystem::exists(filePath)) {
             auto fsize = std::filesystem::file_size(filePath);
-            std::cout << "File size: " <<sformatFileSize(fsize);
+            std::cout << "File size: " << sformatFileSize(fsize);
             return fsize;
         } else {
             std::cout << "File not found: " << filePath << std::endl;
             return 0;
         }
-
-    } catch (const fs::filesystem_error& e) {
+    } catch (const fs::filesystem_error &e) {
         std::cerr << "Error accessing file: " << e.what() << std::endl;
         return 0;
     }
