@@ -42,6 +42,7 @@ std::string getEnv() {
 }
 
 int main() {
+    auto start = std::chrono::high_resolution_clock::now();
     std::string serverUrl = getEnv();
     std::string fileName = FilesFunctions::getUserHomeDir() + "/mydb_dump.txt";
 
@@ -66,5 +67,17 @@ int main() {
         std::cerr << "Could not proceed with database operations due to connection failure." << std::endl;
         return 1;
     }
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed_seconds = std::chrono::duration_cast<std::chrono::seconds>(end - start).count();
+
+    int hours = elapsed_seconds / 3600;
+    int minutes = (elapsed_seconds % 3600) / 60;
+    int seconds = elapsed_seconds % 60;
+
+    std::cout << "Elapsed Time: "
+              << std::setfill('0') << std::setw(2) << hours << ":"
+              << std::setfill('0') << std::setw(2) << minutes << ":"
+              << std::setfill('0') << std::setw(2) << seconds << std::endl;
+
     return 0;
 }
