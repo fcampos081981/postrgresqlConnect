@@ -4,12 +4,10 @@
 #include <vector>
 #include <random>
 
-// ... existing code ...
-
 int main() {
     try {
         std::string serverUrl =
-                "dbname=mydb user=postgres password=Skc080210 host=localhost port=5432";
+                "dbname=mydb user=postgres password=12345 host=localhost port=5432";
         pqxx::connection C(serverUrl);
         if (C.is_open()) {
             std::cout << "Connected: " << C.dbname() << std::endl;
@@ -17,7 +15,7 @@ int main() {
             std::cerr << "Not Connected: " << C.dbname() << std::endl;
         }
 
-        // Random name generator setup
+
         std::vector<std::string> firstNames = {"Ana", "Bruno", "Carlos", "Daniela", "Eduardo", "Fernanda", "Gabriel", "Helena", "Igor", "Julia"};
         std::vector<std::string> lastNames = {"Silva", "Santos", "Oliveira", "Souza", "Rodrigues", "Ferreira", "Almeida", "Pereira", "Lima", "Gomes"};
 
@@ -26,6 +24,7 @@ int main() {
         std::uniform_int_distribution<> distFirst(0, firstNames.size() - 1);
         std::uniform_int_distribution<> distLast(0, lastNames.size() - 1);
 
+
         pqxx::work W(C);
 
         W.exec("CREATE TABLE IF NOT EXISTS funcionarios (id SERIAL PRIMARY KEY, nome TEXT, idade INT)");
@@ -33,7 +32,7 @@ int main() {
         for (int i = 0; i < 10; i++) {
 
             std::string nome = firstNames[distFirst(gen)] + " " + lastNames[distLast(gen)];
-            int idade = i + 1; // or use random age: 20 + (i % 40)
+            int idade = i + 1;
             std::string dados = "INSERT INTO funcionarios (nome, idade) VALUES (" + W.quote(nome) + ", " +
                                 std::to_string(idade) + ")";
             W.exec0(dados);
@@ -42,4 +41,22 @@ int main() {
 
 
             pqxx::result R = W.exec("SELECT id, nome, idade FROM funcionarios");
-// ... existing code ...
+
+            std::cout << "\nLista de Funcionários:" << std::endl;
+
+            for (auto row: R) {
+                std::cout << "ID: " << row[0].as<int>() << " | "
+                        << "Nome: " << row[1].c_str() << " | "
+                        << "Idade: " << row[2].as<int>() << std::endl;
+            }
+        }
+
+        W.commit();
+
+    } catch (std::exception &e) {
+        std::cerr << e.what() << std::endl;
+    }
+
+    return 0;
+    // TIP See CLion help at <a href="https://www.jetbrains.com/help/clion/">jetbrains.com/help/clion/</a>. Also, you can try interactive lessons for CLion by selecting 'Help | Learn IDE Features' from the main menu.
+}
