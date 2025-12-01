@@ -51,7 +51,7 @@ int main() {
 
         dbf.createTables(*conn);
 
-        dbf.insertData(*conn, 999999);
+        dbf.insertData(*conn, 9999);
 
         FilesFunctions::clearScreen();
 
